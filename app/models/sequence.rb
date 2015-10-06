@@ -5,7 +5,7 @@ class Sequence
 
   def self.next(name)
     where(name: name).
-      find_and_modify({ "$inc" => { value: 1 }}, new: true, upsert: true).value
+      find_one_and_replace({ "$inc" => { value: 1 }}, new: true, upsert: true).value
   end
 
 end
