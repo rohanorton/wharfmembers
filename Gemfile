@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
-ruby '2.0.0'
+ruby '2.2.3'
 
 gem 'rails', '~> 4.0.0'
 
 gem "mongo", "~> 2.1.1"
-gem "bson_ext", '~> 1.5.1'
-gem "mongoid", '~> 4.0.2'
+# gem "bson_ext", '~> 1.12.3'
+gem "mongoid", '~> 5.0.0'
 gem 'kaminari', '~> 0.16.3'
 gem 'devise', '~> 3.5.2'
 gem 'optional', '~> 0.0.7'

@@ -1,6 +1,6 @@
 development:
   # Configure available database sessions. (required)
-  sessions:
+  clients:
     # Defines the default session. (required)
     default:
       # Defines the name of the default database that Mongoid can connect to.
@@ -67,7 +67,7 @@ development:
     # Ensure all times are UTC in the app side. (default: false)
     # use_utc: false
 test:
-  sessions:
+  clients:
     default:
       database: wharfmembers_test
       hosts:
@@ -79,15 +79,19 @@ test:
         retry_interval: 0
 
 production:
-  sessions:
+  clients:
     default:
       # The standard MongoDB connection URI allows for easy
       # replica set connection setup.
       # Use environment variables or a config file to keep your
       # credentials safe e.g. <%= ENV['MONGOLAB_URI'] %>.
-      uri: <%= ENV['MONGOLAB_URI'] %>
+      database: <%= ENV['MONGO_DB'] %>
+      hosts:
+       - <%= ENV['MONGO_HOST'] %>
 
       options:
+        user: <%= ENV['MONGO_USER'] %>
+        password: <%= ENV['MONGO_PASSWORD'] %>
         # max_retries specifies the number of times to attempt
         # an operation before giving up.
         max_retries: 30
