@@ -23,7 +23,7 @@ class MemberActions
   end
 
   def expired
-    template.link_to "Renew Membership", template.renew_member_path(member), class: 'btn'
+    template.link_to "Renew Membership", template.renew_member_path(id: member.no), class: 'btn'
   end
 
   attr_reader :template, :member

@@ -26,7 +26,7 @@ class MembersController < ApplicationController
   def renew
     @member = Member.find_by(no: params[:id])
     @member.renew
-    redirect_to @member
+    redirect_to member_path(id: @member.no)
   end
 
   def bulk_action
