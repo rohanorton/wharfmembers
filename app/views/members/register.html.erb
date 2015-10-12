@@ -2,8 +2,9 @@
 <html lang="en">
   <head>
     <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= javascript_include_tag 'adjust_iframe_height' %>
   </head>
-  <body>
+  <body onload="adjustIframeHeight();">
     <div style="width: 500px">
       <%= form_for(@member, url: join_members_path) do |f| %>
         <% if @member.errors.any? %>
