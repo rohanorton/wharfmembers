@@ -1,7 +1,28 @@
 require 'rails_helper'
 
 describe Member do
+  describe ".search" do
+    let!(:member) do
+      Member.create(first_name: "Nikolai", last_name: "LastName", email: "nikolai@example.com")
+    end
+    let!(:someone_else) do
+      Member.create(first_name: "Other", last_name: "Person", email: "other@example.com")
+    end
 
+    it "finds by names" do
+      expect(described_class.search("nikola").to_a).to eq([member])
+      expect(described_class.search("nikolai notlastname")).to eq([])
+      expect(described_class.search("nikolai last")).to eq([member])
+    end
+
+    it "finds by email" do
+      expect(described_class.search("nikolai@ex")).to eq([member])
+    end
+
+    it "finds by no" do
+      expect(described_class.search("#{member.no}")).to eq([member])
+    end
+  end
   it 'has a full name' do
     member = Member.new(first_name: 'Russell', last_name: 'Dunphy')
     expect(member.full_name).to eq 'Russell Dunphy'

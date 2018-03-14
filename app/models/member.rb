@@ -43,6 +43,8 @@ class Member
       where(:first_name_lowercase => /#{first}/i, :last_name_lowercase => /#{second}/i)
     elsif first
       self.or({:first_name_lowercase => /#{first}/i}, {:last_name_lowercase => /#{first}/i})
+          .or(email: /#{first}/i)
+          .or(no: first)
     else
       all
     end
