@@ -70,6 +70,10 @@ class Member
     current.where(:email_allowed => true, :email.ne => '')
   }
 
+  scope :mailing_list_no_lifetime, -> {
+    current.where(:email_allowed => true, :email.ne => '', lifetime_membership: false)
+  }
+
   scope :mailing_list_expired, -> {
     expired.where(:email_allowed => true, :email.ne => '')
   }

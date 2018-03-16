@@ -18,6 +18,7 @@ Wharfmembers::Application.routes.draw do
       get :expired
       get :lifetime
       get :mailing_list
+      get :mailing_list_no_lifetime
       get :mailing_list_expired
       post :bulk_action
     end
