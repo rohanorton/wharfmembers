@@ -14,6 +14,7 @@ class Member
   field :postcode, type: String
   field :notes, type: String
   field :email_allowed, type: Boolean, default: true
+  field :over_18, type: Boolean, default: false
   field :manually_updated, type: Boolean, default: false
   field :lifetime_membership, type: Boolean, default: false
 
@@ -25,6 +26,7 @@ class Member
 
   validates_presence_of :first_name, :last_name
   validates_uniqueness_of :no
+  validate :over_18, inclusion: { in: [true] }, on: :create
 
   before_save do
     self.first_name_lowercase = self.first_name.downcase

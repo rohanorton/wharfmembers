@@ -34,8 +34,11 @@
         <%= f.text_field :address_three %>
         <%= f.label :postcode %>
         <%= f.text_field :postcode %>
+        <%= f.label :over_18, class: "checkbox" do %>
+          <%= f.check_box :over_18 %>  I confirm I am over 18
+        <% end %>
         <div class="actions">
-          <%= f.submit "Register", class: "btn btn-primary", name: 'register' %>
+          <%= f.submit "Register", class: "btn btn-primary", name: 'register', disabled: true, title: "Must be over 18" %>
           <%= link_to "Cancel", '/', class: "btn" %>
         </div>
       <% end %>

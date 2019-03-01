@@ -3,10 +3,10 @@ require 'rails_helper'
 describe Member do
   describe ".search" do
     let!(:member) do
-      Member.create(first_name: "Nikolai", last_name: "LastName", email: "nikolai@example.com")
+      Member.create(first_name: "Nikolai", last_name: "LastName", email: "nikolai@example.com", over_18: true)
     end
     let!(:someone_else) do
-      Member.create(first_name: "Other", last_name: "Person", email: "other@example.com")
+      Member.create(first_name: "Other", last_name: "Person", email: "other@example.com", over_18: true)
     end
 
     it "finds by names" do
