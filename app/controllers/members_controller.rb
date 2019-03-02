@@ -57,23 +57,13 @@ class MembersController < ApplicationController
   end
 
   def create
-    @member = Member.new(member_params)
-    if @member.save
-      if params[:register]
-        render text: "Thanks for registering, #{@member.full_name}"
-      else
-        redirect_to member_path(id: @member.no), notice: 'Member was successfully created.'
-      end
+    if params[:member_existing_member]
+      existing_create
     else
-      if params[:register]
-        render action: "register", layout: false
-      else
-        render action: "new"
-      end
+      new_create
     end
   end
   alias_method :join, :create
-
 
   def update
     @member = Member.find_by(no: params[:id])
@@ -88,5 +78,35 @@ class MembersController < ApplicationController
     @member = Member.find_by(no: params[:id])
     @member.destroy
     redirect_to members_url
+  end
+
+  private
+
+  def existing_create
+    begin
+      @member = Member.find_by(email: member_params[:email], first_name_lowercase: member_params[:first_name].try(:downcase), last_name_lowercase: member_params[:last_name].try(:downcase))
+    rescue  Mongoid::Errors::DocumentNotFound
+      return render text: "Sorry, we could not find your details matching your name and email. Please try again or register as a new member. Thanks"
+    end
+    @member.update!(member_params)
+    @member.renew
+    render text: "Thank you #{@member.full_name} [Member number #{@member.no}], please speak to a member of staff next time you're in to finalise your renewal"
+  end
+
+  def new_create
+    @member = Member.new(member_params)
+    if @member.save
+      if params[:register]
+        render text: "Thanks for registering, #{@member.full_name} [Member number #{@member.no}]."
+      else
+        redirect_to member_path(id: @member.no), notice: 'Member was successfully created.'
+      end
+    else
+      if params[:register]
+        render action: "register", layout: false
+      else
+        render action: "new"
+      end
+    end
   end
 end

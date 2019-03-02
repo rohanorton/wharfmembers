@@ -17,6 +17,9 @@
         <p>
           Please complete this form. All information is required by law- sorry! Membership takes a minimum of 48 hours to take effect. You will be asked to pay your membership fee next time you attend an event (until we have online payment set up). Membership costs £1. Thanks!
         </p>
+        <%= label :member, :existing_member, class: "checkbox" do %>
+          <%= check_box_tag :member_existing_member, "1" %> Are you an existing member?
+        <% end %>
         <%= f.label :first_name %>
         <%= f.text_field :first_name %>
         <%= f.label :last_name %>
