@@ -26,6 +26,7 @@ class Member
 
   validates_presence_of :first_name, :last_name
   validates_uniqueness_of :no
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, allow_blank: true } # Not sure if we want blank emails but :shrug:
   validate :over_18, inclusion: { in: [true] }, on: :create
 
   before_save do
