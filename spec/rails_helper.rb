@@ -26,11 +26,12 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 RSpec.configure do |config|
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
-    DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner.strategy = :truncation, {:except => %w[sequences]}
   end
 
-  config.before(:each) do
+  config.around(:each) do |example|
+    DatabaseCleaner.start
+    example.run
     DatabaseCleaner.clean
   end
 

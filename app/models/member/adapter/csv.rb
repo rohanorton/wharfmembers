@@ -5,9 +5,8 @@ class Member
       extend self
 
       def adapt(members)
-        ::CSV.generate do |csv|
-          csv << [:email, :name]
-          members.each { |member| csv << [member.email, member.full_name] }
+        ::CSV.generate(write_headers: true, headers: ["Email", "Name", "Currently a member",  "Lifetimer"])  do |csv|
+          members.each { |member| csv << [member.email, member.full_name, member.current?, member.lifetime_membership] }
         end
       end
 

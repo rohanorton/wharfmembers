@@ -1,0 +1,21 @@
+<h1>
+  Mailing List (No Lifetimers)
+  <small>(<%= Member.mailing_list.count %>)</small>
+  <%= link_to mailing_list_no_lifetime_members_path(format: :text), target: '_blank' do %>
+    <i class="icon-print"></i>
+  <% end %>
+  <%= link_to mailing_list_no_lifetime_members_path(format: :csv) do %>
+    <i class="icon-download-alt"></i>
+  <% end %>
+</h1>
+
+<%= paginate members %>
+<%= form_tag bulk_action_members_path do %>
+  <%= render 'table', members: members %>
+  <div class="actions">
+    <%= submit_tag 'Delete Selected', name: 'delete-selected', class: 'btn btn-danger' %>
+  </div>
+<% end %>
+<div class="pull-right">
+  <%= paginate members %>
+</div>

@@ -13,7 +13,8 @@ class Member
   field :address_three, type: String
   field :postcode, type: String
   field :notes, type: String
-  field :email_allowed, type: Boolean, default: true
+  field :email_allowed, type: Boolean, default: false
+  field :over_18, type: Boolean, default: false
   field :manually_updated, type: Boolean, default: false
   field :lifetime_membership, type: Boolean, default: false
 
@@ -25,6 +26,8 @@ class Member
 
   validates_presence_of :first_name, :last_name
   validates_uniqueness_of :no
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP, allow_blank: true } # Not sure if we want blank emails but :shrug:
+  validate :over_18, inclusion: { in: [true] }, on: :create
 
   before_save do
     self.first_name_lowercase = self.first_name.downcase
@@ -43,6 +46,8 @@ class Member
       where(:first_name_lowercase => /#{first}/i, :last_name_lowercase => /#{second}/i)
     elsif first
       self.or({:first_name_lowercase => /#{first}/i}, {:last_name_lowercase => /#{first}/i})
+          .or(email: /#{first}/i)
+          .or(no: first)
     else
       all
     end
@@ -66,6 +71,10 @@ class Member
 
   scope :mailing_list, -> {
     current.where(:email_allowed => true, :email.ne => '')
+  }
+
+  scope :mailing_list_no_lifetime, -> {
+    current.where(:email_allowed => true, :email.ne => '', lifetime_membership: false)
   }
 
   scope :mailing_list_expired, -> {

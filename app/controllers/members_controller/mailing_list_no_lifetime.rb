@@ -1,7 +1,7 @@
 class MembersController < ApplicationController
-  class Current < List
+  class MailingListNoLifetime < List
     def members
-      Member.current
+      Member.mailing_list_no_lifetime
     end
   end
 end
